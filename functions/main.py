@@ -46,6 +46,6 @@ def handler(context, event):
     context.logger.info('Sending message for log queue')
     send_message(channel, "log", message)
     if danger == 4:
-        context.logger.info('Sending message for notification queue')
-        send_message(channel, "notification", message)
+        context.logger.info('Sending message for alarm queue')
+        send_message(channel, "alarm", message)
     return
