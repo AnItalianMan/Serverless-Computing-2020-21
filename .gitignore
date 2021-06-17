@@ -1,8 +1,6 @@
 
-PythonBroker/.idea/inspectionProfiles/
-
-PythonBroker/.idea/
+.idea/
 
 PythonBroker/__pycache__/
 
-functions/.idea/
+logconsumer/.mvn/wrapper/

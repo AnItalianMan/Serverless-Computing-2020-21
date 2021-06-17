@@ -1,0 +1,13 @@
+version: "3.3"
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_DB: logdb
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: serverlessistheway
+    container_name: database_log
+    volumes:
+      - ../dbscript/creazionedb.sql:/docker-entrypoint-initdb.d/creazionedb.sql
+    ports:
+      - "5432:5432"
