@@ -1,7 +1,6 @@
 from datetime import datetime
 import pika
 
-
 def send_message(channel, queue, data):
     channel.queue_declare(queue=queue)
     channel.basic_publish(exchange='',
@@ -45,7 +44,7 @@ def handler(context, event):
     channel = create_connection()
     context.logger.info('Sending message for log queue')
     send_message(channel, "log", message)
-    if danger == 4:
+    if danger == 3:
         context.logger.info('Sending message for alarm queue')
         send_message(channel, "alarm", message)
     return
