@@ -1,8 +1,8 @@
 package com.serverlessproject.logconsumer.configuration;
 
 
-import com.serverlessproject.logconsumer.service.SaveLogService;
-import com.serverlessproject.logconsumer.service.SaveLogServiceImpl;
+import com.serverlessproject.logconsumer.service.LogService;
+import com.serverlessproject.logconsumer.service.LogServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +14,7 @@ public class ServiceConfiguration {
     private DaoConfiguration daoConfiguration;
 
     @Bean
-    public SaveLogService saveLogService(){
-        return new SaveLogServiceImpl(daoConfiguration.loggerDao());
+    public LogService logService(){
+        return new LogServiceImpl(daoConfiguration.loggerDao());
     }
 }

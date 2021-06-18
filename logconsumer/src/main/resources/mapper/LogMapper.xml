@@ -8,4 +8,9 @@
         VALUES
             (#{log})
     </insert>
+
+    <select id="retreiveLogs" resultType="String" >
+        SELECT log
+        FROM logtable
+    </select>
 </mapper>

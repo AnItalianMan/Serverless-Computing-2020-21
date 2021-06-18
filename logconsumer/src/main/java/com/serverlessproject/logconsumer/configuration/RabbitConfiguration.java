@@ -1,8 +1,6 @@
 package com.serverlessproject.logconsumer.configuration;
 
 import com.serverlessproject.logconsumer.component.RabbitLogListener;
-import com.serverlessproject.logconsumer.service.SaveLogService;
-import com.serverlessproject.logconsumer.service.SaveLogServiceImpl;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +26,7 @@ public class RabbitConfiguration {
 
     @Bean
     public RabbitLogListener rabbitLogListener(){
-        return new RabbitLogListener(serviceConfiguration.saveLogService());
+        return new RabbitLogListener(serviceConfiguration.logService());
     }
 
     @Bean

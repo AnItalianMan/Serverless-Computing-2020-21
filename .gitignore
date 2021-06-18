@@ -6,3 +6,5 @@ PythonBroker/__pycache__/
 logconsumer/.mvn/wrapper/
 
 AlarmConsumer/__pycache__/
+
+logviewer/node_modules

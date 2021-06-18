@@ -1,7 +1,10 @@
 package com.serverlessproject.logconsumer.service;
 
-public interface SaveLogService {
+import java.util.List;
+
+public interface LogService {
 
     void saveLog(String log);
 
+    List<String> getLogs();
 }
