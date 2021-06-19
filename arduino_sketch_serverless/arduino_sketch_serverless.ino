@@ -17,16 +17,21 @@ void setup() {
   pinMode(BT_RX_PIN, INPUT);
   pinMode(BT_TX_PIN, OUTPUT);
 
-  //inizializzo comunicazione Seriale
+  //Serial communication
   Serial.begin(9600);
 
-  //inizializzo comunicazione Bluetooth
+  //Bluetooth communication
   bt.begin(9600);
   setupAndSetLedPin(); 
+  
   photoresistorSetupAndCalibration();
+  
+  waitForBluetoothConnection();
+  delay(3000);
 }
 
 void photoresistorSetupAndCalibration(){
+  setLedSensor(HIGH, LOW, LOW);
   while(millis() < 5000){
     photoresistorValue = analogRead(photoresistorPin);
     if(photoresistorValue > photoresistorValueMax){
@@ -37,6 +42,15 @@ void photoresistorSetupAndCalibration(){
       photoresistorValueMin = photoresistorValue;  
     }
   }
+}
+
+void waitForBluetoothConnection(){
+  setLedSensor(HIGH, HIGH, LOW);
+  while (bt.available()==0){
+    Serial.println("Waiting for connection");
+    delay(1000);
+  }
+  setLedSensor(HIGH, HIGH, HIGH);
 }
 
 void setupAndSetLedPin(){
@@ -59,7 +73,7 @@ void loop() {
     setLedSensor(HIGH, HIGH, HIGH);
     //emitAlarm(photoresistorValue);
   }
-  delay(100);
+  delay(200);
 }
 
 void setLedSensor(int greenLedValue, int yellowLedValue, int redLedValue){

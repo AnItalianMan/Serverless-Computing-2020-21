@@ -1,5 +1,7 @@
 from datetime import datetime
+
 import pika
+
 
 def send_message(channel, queue, data):
     channel.queue_declare(queue=queue)
@@ -16,7 +18,7 @@ def create_connection():
 
 
 def get_danger(x):
-    return (x - 200) * (3 - 1) / (1000 - 200) + 1
+    return int((x - 280) * (3 - 1) / (800 - 280) + 1) + 1
 
 
 def generate_message(danger, body):
@@ -37,7 +39,7 @@ def generate_message(danger, body):
 def handler(context, event):
     body = int(event.body.decode())
     context.logger.info(f'Received body: {body}')
-    danger = int(get_danger(body))
+    danger = get_danger(body)
     context.logger.info(f'Danger body: {danger}')
     message = generate_message(danger, body)
     context.logger.info(f'Generated message: {message}')

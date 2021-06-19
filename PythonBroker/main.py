@@ -5,11 +5,12 @@ if __name__ == '__main__':
     mac = BluetoothManager.discover_devices("HC-05")
     if mac is None:
         raise ValueError("Device not found")
+    print(mac)
     exchange_name = "topic.sensors"
     routing_key = "*.*.photoresistor"
     queue_name = "sensor_values"
 
-    sender = MqttHandler("admin", "serverlessistheway")
+    sender = MqttHandler("administrator", "serverlessistheway")
     sender.routing_key = routing_key
     sender.exchange_name = exchange_name
     sender.create_exchange(exchange_name, "topic")
@@ -19,4 +20,3 @@ if __name__ == '__main__':
     bluetooth_manager = BluetoothManager(mac, sender)
     bluetooth_manager.start()
     bluetooth_manager.receive_messages()
-    print(BluetoothManager.discover_devices("HC-05"))

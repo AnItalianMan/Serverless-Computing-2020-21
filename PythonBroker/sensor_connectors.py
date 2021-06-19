@@ -23,6 +23,7 @@ class BluetoothManager:
         self._sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
         self._sock.connect((self._mac, self._port))
         print("Connection to bluetooth device created")
+        self._sock.send("OK")
 
     def receive_messages(self):
         if self._sock is None:
@@ -30,8 +31,13 @@ class BluetoothManager:
             return
 
         print("Starting the listener")
-        self._sock.recv(4096)
+        msg = ""
         while True:
-            data = self._sock.recv(3)
-            self._handler.handle(data)
-            time.sleep(0.01)
+            data = self._sock.recv(1)
+            data = data.decode("UTF-8")
+            if data == "\n":
+                self._handler.handle(msg)
+                msg = ""
+            else:
+                msg += data
+
