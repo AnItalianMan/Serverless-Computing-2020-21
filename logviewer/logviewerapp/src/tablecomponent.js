@@ -19,7 +19,6 @@ function TableComponent(props){
 
     const ottieniDati = async () => {
         setLoading(true)
-        setTimeout(5000)
         let response = await fetch('http://localhost:7052/getlogs');
         let data = await response.json()
         setLogs(data)

@@ -12,14 +12,17 @@ import org.springframework.amqp.core.Queue;
 @Configuration
 public class RabbitConfiguration {
 
-    @Value("${rabbit.user.username}")
+    @Value("#{environment.RABBIT_USER_USERNAME}")
     private String username;
 
-    @Value("${rabbit.user.password}")
+    @Value("#{environment.RABBIT_USER_PASSWORD}")
     private String password;
 
-    @Value("${rabbit.queue.name}")
+    @Value("#{environment.RABBIT_QUEUE_NAME}")
     private String queueName;
+
+    @Value("#{environment.RABBIT_HOST}")
+    private String hostname;
 
     @Autowired
     private ServiceConfiguration serviceConfiguration;
@@ -29,9 +32,13 @@ public class RabbitConfiguration {
         return new RabbitLogListener(serviceConfiguration.logService());
     }
 
+    public String getQueueName() {
+        return String.valueOf(queueName);
+    }
+
     @Bean
     public ConnectionFactory pooledConnectionFactory() {
-        CachingConnectionFactory cachingConnectionFactory = new CachingConnectionFactory();
+        CachingConnectionFactory cachingConnectionFactory = new CachingConnectionFactory(hostname);
         cachingConnectionFactory.setUsername(username);
         cachingConnectionFactory.setPassword(password);
         return cachingConnectionFactory;
@@ -39,7 +46,7 @@ public class RabbitConfiguration {
 
     @Bean
     public Queue queue(){
-        return new Queue(queueName, false);
+        return new Queue(getQueueName(), false);
     }
 
 

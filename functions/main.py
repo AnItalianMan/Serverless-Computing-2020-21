@@ -13,7 +13,7 @@ def send_message(channel, queue, data):
 def create_connection():
     credentials = pika.PlainCredentials("admin", "serverlessistheway")
     connection = pika.BlockingConnection(
-        pika.ConnectionParameters(host='192.168.56.1', port=5672, credentials=credentials))
+        pika.ConnectionParameters(host='192.168.1.156', port=5672, credentials=credentials))
     return connection.channel()
 
 

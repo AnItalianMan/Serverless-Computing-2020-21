@@ -68,10 +68,10 @@ void loop() {
     setLedSensor(HIGH, LOW, LOW);
   }else if(danger == 2){
     setLedSensor(HIGH, HIGH, LOW);
-    //emitAlarm(photoresistorValue);
+    emitAlarm(photoresistorValue);
   }else if(danger == 3){
     setLedSensor(HIGH, HIGH, HIGH);
-    //emitAlarm(photoresistorValue);
+    emitAlarm(photoresistorValue);
   }
   delay(200);
 }

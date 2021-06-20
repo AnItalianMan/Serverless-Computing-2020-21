@@ -1,5 +1,26 @@
 version: "3.3"
 services:
+  rabbitmq:
+    image: cyrilix/rabbitmq-mqtt
+    container_name: rabbitmq
+    build:
+      context: .
+      dockerfile: RabbitMQ-Dockerfile
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+      
+  nuclio:
+    image: quay.io/nuclio/dashboard:stable-amd64
+    container_name: nuclio
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /tmp:/tmp
+    ports:
+      - "8070:8070"
+    depends_on:
+      - rabbitmq
+      
   db:
     image: postgres
     environment:
@@ -11,3 +32,36 @@ services:
       - ../dbscript/creazionedb.sql:/docker-entrypoint-initdb.d/creazionedb.sql
     ports:
       - "5432:5432"
+
+  logconsumer:
+    ports:
+      - "7052:7052"
+    container_name: logconsumer
+    build:
+      context: ../logconsumer
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+      - rabbitmq
+      
+  logviewer:
+    image: httpd:2.4
+    container_name: logviewer
+    build:
+      context: ../logviewer/logviewerapp/
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    depends_on:
+      - rabbitmq
+      
+  alarmconsumer:
+    image: python:3.7
+    container_name: alarmconsumer
+    build:
+      context: ../AlarmConsumer
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    depends_on:
+      - rabbitmq

@@ -1,0 +1,7 @@
+FROM cyrilix/rabbitmq-mqtt
+
+ADD init.sh /init.sh
+
+
+# Define default command
+CMD ["/init.sh"]

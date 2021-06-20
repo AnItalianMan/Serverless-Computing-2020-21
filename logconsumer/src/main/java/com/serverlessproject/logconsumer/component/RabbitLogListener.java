@@ -7,11 +7,12 @@ public class RabbitLogListener {
 
     private final LogService logService;
 
+
     public RabbitLogListener(LogService logService) {
         this.logService = logService;
     }
 
-    @RabbitListener(queues = "${rabbit.queue.name}")
+    @RabbitListener(queues = "#{rabbitConfiguration.getQueueName()}")
     private void logListener(String log) {
         logService.saveLog(log);
     }

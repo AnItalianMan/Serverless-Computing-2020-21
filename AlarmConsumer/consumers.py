@@ -5,7 +5,7 @@ from interfaces import HanderInterface
 class MqttConsumer:
 
     def __init__(self, username: str, password: str, queue_name: str, handler: HanderInterface,
-                 host: str = 'localhost', port: int = 5672):
+                 host: str = 'rabbitmq', port: int = 5672):
         credentials = pika.PlainCredentials(username, password)
         self._connection = pika.BlockingConnection(
             pika.ConnectionParameters(host=host, port=port, credentials=credentials))
